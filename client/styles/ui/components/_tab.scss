@@ -1,0 +1,196 @@
+// Dependency: Angular UI Bootstrap
+
+.ui-tab-container {
+    
+    .ui-tab .nav-tabs {
+        margin-bottom: 0;
+    }
+
+    .nav-tabs {
+        background-color: transparent;
+        border-bottom: 0;
+        &.nav-justified {
+            border-bottom: 0;
+            > li {
+                > a {
+                    border-bottom-color: transparent;
+                }
+            }
+        }
+
+        > li {
+            margin-bottom: -2px;
+            margin-top: 4px;
+            &.active {
+                margin-top: 0;
+                > a {
+                    color: $text-color;
+                    padding: 12px 22px;
+                    border: 1px solid $panel-default-border;
+                    border-bottom: 0;
+                    box-shadow: 0 -1px 1px rgba(0,0,0,.1);
+                    background-color: $reverse;
+                    &:hover {
+                        border: 1px solid  $panel-default-border;
+                        border-bottom: 0;
+                        background-color: $reverse;
+                    }
+                }
+            }
+            > a {
+                margin-right: 3px;
+                padding: 10px 22px;
+                border: none;
+                color: $bright;
+                background-color: $brand-primary;
+                &:hover {
+                    background-color: darken($brand-primary, 2%);
+                    border: none;
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 15px;
+        border: 1px solid $panel-default-border;
+        box-shadow: 0 1px 1px rgba(0,0,0,.1);
+        background-color: $reverse;
+        border-radius: $border-radius-base;
+    }
+
+    // Color
+    &.ui-tab-dark {
+        .nav-tabs {
+            > li {
+                &.active {
+                    margin-top: 0;
+                    > a {
+                        background-color: $reverse;
+                        &:hover {
+                            background-color: $reverse;
+                        }
+                    }
+                }                
+                > a {
+                    background-color: $dark;
+                    &:hover {
+                        background-color: darken($dark, 2%);
+                    }
+                }
+            }
+        }
+    }
+    &.ui-tab-success {
+        .nav-tabs {
+            > li {
+                &.active {
+                    margin-top: 0;
+                    > a {
+                        background-color: $reverse;
+                        &:hover {
+                            background-color: $reverse;
+                        }
+                    }
+                }                
+                > a {
+                    background-color: $brand-success;
+                    &:hover {
+                        background-color: darken($brand-success, 2%);
+                    }
+                }
+            }
+        }
+    }
+    &.ui-tab-info {
+        .nav-tabs {
+            > li {
+                &.active {
+                    margin-top: 0;
+                    > a {
+                        background-color: $reverse;
+                        &:hover {
+                            background-color: $reverse;
+                        }
+                    }
+                }                
+                > a {
+                    background-color: $brand-info;
+                    &:hover {
+                        background-color: darken($brand-info, 2%);
+                    }
+                }
+            }
+        }
+    }
+    &.ui-tab-warning {
+        .nav-tabs {
+            > li {
+                &.active {
+                    margin-top: 0;
+                    > a {
+                        background-color: $reverse;
+                        &:hover {
+                            background-color: $reverse;
+                        }
+                    }
+                }                
+                > a {
+                    background-color: $brand-warning;
+                    &:hover {
+                        background-color: darken($brand-warning, 2%);
+                    }
+                }
+            }
+        }
+    }
+    &.ui-tab-danger {
+        .nav-tabs {
+            > li {
+                &.active {
+                    margin-top: 0;
+                    > a {
+                        background-color: $reverse;
+                        &:hover {
+                            background-color: $reverse;
+                        }
+                    }
+                }                
+                > a {
+                    background-color: $brand-danger;
+                    &:hover {
+                        background-color: darken($brand-danger, 2%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ui-tab {
+    .nav-tabs {
+        margin-bottom: 15px;
+        &.nav-justified {
+            > li {
+                &.active {
+                    > a {
+                        border-bottom-color: transparent;
+                    }
+                }
+            }
+        }
+
+        > li {
+            &.active {
+                > a {
+                    background-color: $reverse;
+                }
+            }
+        }
+        a {
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

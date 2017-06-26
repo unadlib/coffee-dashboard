@@ -1,0 +1,72 @@
+<div class="page-signup">
+
+    <div class="signin-header">
+        <section class="logo text-center">
+            <a href="#/">{{main.brand}}</a>
+        </section>
+    </div>
+
+    <div class="signup-body">
+        <div class="container">
+            <div class="form-container">
+
+                <section>
+                    <form class="form-horizontal form-validation text-center" ng-submit="signup()" novalidate name="usersignup">
+                        <div class="form-group">
+                            <div class="btn-icon-lined btn-icon-round btn-icon-sm btn-default-light">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                            </div>
+                            <input type="email"
+                                   class="form-control input-lg input-round text-center"
+                                   data-i18n="i18n-placeholder"
+                                   placeholder="Email"
+                                   ng-model="email"
+                                   required
+                                   >
+                        </div>
+                        <div class="form-group">
+                            <div class="btn-icon-lined btn-icon-round btn-icon-sm btn-default-light">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </div>
+                            <input type="text"
+                                   class="form-control input-lg input-round text-center"
+                                   data-i18n="i18n-placeholder"
+                                   placeholder="Realname"
+                                   ng-model="realname"
+                                   data-ng-minlength="4"
+                                   required
+                                   >
+                        </div>
+
+                        <div class="form-group">
+                            <div class="btn-icon-lined btn-icon-round btn-icon-sm btn-default-light">
+                                <span class="glyphicon glyphicon-lock"></span>
+                            </div>
+                            <input type="password"
+                                   class="form-control input-lg input-round text-center"
+                                   data-i18n="i18n-placeholder"
+                                   placeholder="Password"
+                                   ng-model="password"
+                                   data-ng-minlength="6"
+                                   required
+                                    >
+                        </div>
+
+
+                        <div class="form-group">
+                            <p class="text-muted text-small">By clicking on Sign up, you agree to <a href="javascript:;">terms & conditions</a> and <a href="javascript:;">privacy policy</a></p>
+                            <div class="divider"></div>
+                            <button type="submit" class="btn btn-primary btn-block btn-lg btn-round" data-i18n="Sign up" data-ng-disabled="usersignup.$valid==false"></button>
+                        </div>
+
+                    </form>
+                </section>
+
+                <section>
+                    <p class="text-center text-muted">Already have an account? <a href="#/user/signin"  data-i18n="sign in"></a></p>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<link href="bower_components/lightgallery/dist/css/lightgallery.css" rel="stylesheet">
+<div class="table-filters">
+    <div class="row">
+        <div class="col-sm-4 col-xs-6">
+            <form>
+                <input type="text"
+                       placeholder="Search..."
+                       class="form-control"
+                       data-ng-model="searchKeywords"
+                       data-ng-keyup="search()">
+            </form>
+        </div>
+        <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{currentPageStores.length}}/{{currentPageCount}} entries
+                    </span>
+        </div>
+    </div>
+</div>
+<div class="panel-body">
+    <div class="panel panel-info" data-ng-if="false">
+        <div class="panel-heading">
+            <a href="javascript:;" class="btn-icon btn-icon-round btn-icon-sm bg-warning">
+                <i class="fa fa-mail-reply"></i>
+            </a>
+        </div>
+        <div class="panel-body">
+            <ul class="list-unstyled row" ng-init="remote_server = 'http://218.5.112.56:3003/'">
+                <li class="col-xs-6 col-sm-4 col-md-3" data-ng-repeat="store in datatable.detailView"
+                    data-src="{{'ba/'+store.local}}">
+                    <a href="">
+                        <img class="img-responsive"  ng-src="http://218.5.112.56:3003/{{store.thumbnail_local}}">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-2 well-lg"  data-ng-repeat="store in currentPageStores">
+        <a href="javascript:void(0);" data-ng-click="datatable.viewDetail(store)" id="{{store._id}}">
+            <img ng-src="http://218.5.112.56:3003/{{store.thumbnail_local}}" width="180" height="132">
+        </a>
+    </div>
+</div>
+<footer class="table-footer">
+    <div class="row">
+        <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select class="ui-select"
+                                data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        entries per page
+                    </span>
+        </div>
+        <div class="col-md-6 text-right pagination-container">
+            <pagination class="pagination-sm"
+                        ng-model="currentPage"
+                        total-items="currentPageCount"
+                        max-size="5"
+                        ng-change="select(currentPage)"
+                        items-per-page="numPerPage"
+                        rotate="false"
+                        previous-text="&lsaquo;" next-text="&rsaquo;"
+                        boundary-links="true"></pagination>
+        </div>
+    </div>
+</footer>

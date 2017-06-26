@@ -1,0 +1,20 @@
+
+<div class="nav-wrapper" data-ng-controller="NavCtrl">
+    <ul id="nav"
+        class="nav"
+        data-slim-scroll
+        data-collapse-nav
+        >
+        <li data-ng-repeat="item in nav|filter:{isShow:true}" data-ng-class="{active:local === item.url}" repeat-end="motion()">
+            <a href="#{{item.url}}" ng-click="historyNav(item,this)"><i class="fa {{item.icon}}"></i><span data-ng-bind="item.text"></span> </a>
+            <ul data-ng-if="item.child.length>0">
+                <li data-ng-repeat="child in item.child|filter:{isShow:true}">
+                    <a href="#{{child.url}}" ng-click="historyNav(child)">
+                        <i class="fa fa-angle-right"></i>
+                        <span ng-bind="child.text"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

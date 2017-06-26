@@ -1,0 +1,69 @@
+<div class="form-group" uib-dropdown is-open="isopen[status.startTime]">
+    <label for="startTime"></label>
+    <ul class="dropdown-menu dropdown-time ng-hide" ng-show="isTimeType" ui-not-close-on-click ng-click="$event.stopPropagation()">
+        <li>
+            <div ng-model="ngModel[status.startTime]" data-ng-change="changeTime(status.startTime)" style="display:inline-block;">
+                <uib-timepicker class="ui-timepicker" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+            </div>
+        </li>
+        <li>
+            <span class="btn-group pull-left">
+                <button type="button" class="btn btn-sm btn-info" ng-click="selectTime(status.startTime)">Now</button>
+            </span>
+                <button type="button" class="btn btn-sm btn-success pull-right" ng-click="closeTime(status.startTime)">Close</button>
+        </li>
+    </ul>
+    <div class="input-group ui-datepicker" ng-class="{'TimeType':isTimeType,'ntTimeType':!isTimeType}">
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="{{status.format}}"
+               id="startTime"
+               ng-model="ngModel[status.startTime]"
+               is-open="status.openedStart"
+               ng-click="status.openedStart=!0"
+               datepicker-options="dateOptions"
+               ng-required="true"
+               ng-change="change(status.startTime)"
+               max-date="ngModel[status.endTime]"
+               close-text="Close"
+                >
+        <span class="input-group-addon" ng-click="openStartTime($event)"><i class="fa fa-calendar"></i></span>
+    </div>
+</div>
+<div class="form-group" uib-dropdown is-open="isopen[status.endTime]">
+    <label for="endTime">-</label>
+    <ul class="dropdown-menu dropdown-time ng-hide" ng-show="isTimeType" ui-not-close-on-click ng-click="$event.stopPropagation()">
+        <li>
+            <div ng-model="ngModel[status.endTime]" data-ng-change="changeTime(status.endTime)" style="display:inline-block;">
+                <uib-timepicker class="ui-timepicker" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+            </div>
+        </li>
+        <li>
+            <span class="btn-group pull-left">
+                <button type="button" class="btn btn-sm btn-info" ng-click="selectTime(status.endTime)">Now</button>
+            </span>
+            <button type="button" class="btn btn-sm btn-success pull-right" ng-click="closeTime(status.endTime)">Close</button>
+        </li>
+    </ul>
+    <div class="input-group ui-datepicker" ng-class="{'TimeType':isTimeType,'ntTimeType':!isTimeType}">
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="{{status.format}}"
+               id="endTime"
+               ng-model="ngModel[status.endTime]"
+               is-open="status.openedEnd"
+               ng-click="status.openedEnd=!0"
+               datepicker-options="dateOptions"
+               ng-required="true"
+               min-date="ngModel[status.startTime]"
+               ng-change="change(status.endTime)"
+               close-text="Close">
+        <span class="input-group-addon" ng-click="openEndTime($event)"><i class="fa fa-calendar"></i></span>
+    </div>
+</div>
+<div class="form-group">
+    <span class="ui-select">
+        <select ng-Model="dateFilter" data-ng-change="getdateFilter(dateFilter)" class="dataFilter"  data-ng-options="st.text for st in list">
+        </select>
+    </span>
+</div>

@@ -1,0 +1,18 @@
+<div class="page page-general">
+    <div class="row">
+        <div class="col-md-12" data-ng-include="'/views/location.html'"></div>
+        <div class="col-md-12">
+            <section class="panel panel-default">
+                <div class="panel-heading" fullscreen><strong><span class="glyphicon glyphicon-th"></span><span clockfusion="y-M-d H:mm:ss"></span></strong></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button ng-click="addSeries()">AddServices</button>
+                            <highchart id="chart1" config="chart"></highchart>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,207 @@
+<form name="form_constraints" class="form-validation" novalidate ng-submit="submitForm()">
+    <section class="panel-default">
+        <div class="panel-heading">
+            <strong><span class="fa fa-th-large"></span>{{store.$pk?'编辑:'+store.$pk:'新增'}}</strong>
+            <div class="pull-right">
+                <span class="glyphicon glyphicon-remove" ng-click="cancel()"></span>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row" ng-init="width=3">
+                <div class="col-md-6"
+                     data-ng-repeat="key in store.$field"
+                     ng-switch="key.type"
+                     ng-init="_width=12-width"
+                     ng-class="{'col-md-12':key.type=='richtext'}"
+                     ng-if="key.edit">
+                    <span ng-switch-when="string">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <input type="text" class="form-control" data-ng-model="store[key.name]" ng-pattern="key.pattern"  placeholder="{{key.hint}}" ng-required="key.required" uib-popover="{{key.tips}}"  popover-trigger="{{key.trigger}}" ng-disabled="key.forbid?key.forbid(key,store):''">
+                        </div>
+                    </span>
+                    <span ng-switch-when="upload">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" data-ng-model="store[key.name]" ng-pattern="key.pattern"  placeholder="{{key.hint}}" ng-required="key.required" uib-popover="{{key.tips}}"  popover-trigger="{{key.trigger}}" ng-disabled="key.forbid?key.forbid(key,store):''">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" feild-parent="" ng-model="store" upload-modal="key.name" type="button"><i class="fa fa-upload" style="margin-right: 5px;"></i>上传</button>
+                                </span>
+                            </div>
+                        </div>
+                    </span>
+                    <span ng-switch-when="password">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <input type="password" class="form-control" data-ng-model="store[key.name]" ng-pattern="key.pattern"  placeholder="{{key.hint}}" ng-required="key.required" uib-popover="{{key.tips}}"  popover-trigger="{{key.trigger}}" ng-disabled="key.forbid?key.forbid(key,store):''">
+                        </div>
+                    </span>
+                    <span ng-switch-when="float">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <input type="text" class="form-control" data-ng-model="store[key.name]" ng-pattern="key.pattern"  placeholder="{{key.hint}}" ng-required="key.required" uib-popover="{{key.tips}}"  popover-trigger="{{key.trigger}}" ng-disabled="key.forbid?key.forbid(key,store):''">
+                        </div>
+                    </span>
+                    <span ng-switch-when="int">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <input type="number" class="form-control" max="{{key.max}}" min="{{key.min}}" data-ng-model="store[key.name]" ng-pattern="key.pattern"  placeholder="{{key.hint}}" ng-required="key.required" uib-popover="{{key.tips}}"  popover-trigger="{{key.trigger}}" ng-disabled="key.forbid?key.forbid(key,store):''">
+                        </div>
+                    </span>
+                    <span ng-switch-when="icon">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <input type="text" class="form-control" data-ng-model="store[key.name]"  placeholder="{{key.hint}}" ng-required="key.required" uib-popover="{{key.tips}}"  popover-trigger="{{key.trigger}}" ng-disabled="key.forbid?key.forbid(key,store):''">
+                        </div>
+                    </span>
+                    <span ng-switch-when="boolean">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <label class="switch switch-success">
+                                <input type="checkbox"
+                                       ng-model="store[key.name]"
+                                       ng-checked="!(store[key.name]===(key.real!==undefined?key.real:true))?(key.unreal!==undefined?key.unreal:false):(key.real!==undefined?key.real:true)"
+                                       ng-true-value="{{key.real!==undefined?key.real:true}}"
+                                       ng-false-value="{{key.unreal!==undefined?key.unreal:false}}">
+                                <i>
+                                </i>
+                            </label>
+                        </div>
+                    </span>
+                    <span ng-switch-when="radio">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <label class="ui-radio" data-ng-repeat="subitem in store.$scope['$_'+key.name]">
+                                <input data-ng-model="subitem[key.select.key]" type="radio"><span>subitem[key.select.value]</span>
+                            </label>
+                        </div>
+                    </span>
+                    <span ng-switch-when="checkbox">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <label class="ui-checkbox" data-ng-repeat="subitem in store.$scope['$_'+key.name]">
+                                <input data-ng-model="subitem[key.select.key]" type="checkbox"><span>subitem[key.select.value]</span>
+                            </label>
+                        </div>
+                    </span>
+                    <span ng-switch-when="tags">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                        <tags-input data-ng-model="store[key.name]"  class="ui-tags-input" min-length="1" placeholder="添加标签"></tags-input>
+                        </div>
+                    </span>
+                    <span ng-switch-when="textarea">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <textarea type="textarea" class="form-control" style="margin-bottom: 5px;" data-ng-model="store[key.name]" ng-pattern="key.pattern"  placeholder="{{key.hint}}" ng-required="key.required" uib-popover="{{key.tips}}"  popover-trigger="{{key.trigger}}" ng-disabled="key.forbid?key.forbid(key,store):''"></textarea>
+                        </div>
+                    </span>
+                    <span ng-switch-when="enum">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <ui-select ng-model="store[key.name]"
+                                       theme="bootstrap"
+                                       ng-disabled="key.forbid?key.forbid(key,store):''"
+                                       ng-required="key.required"
+                                       ng-init="selectSearch[key.name] = key.name">
+                                <ui-select-match placeholder="{{key.hint?key.hint:'请选择'}}" allow-clear="{{key.clear===true?true:false}}">{{key.noKey?$select.selected:$select.selected.name|limitTo:17}}</ui-select-match>
+                                <ui-select-choices repeat="(key.noKey?subitem:subitem.id) as subitem in key.enum | filter: $select.search">
+                                    <small ng-bind-html="(key.noKey?subitem:subitem.name) | highlight: $select.search"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </span>
+                    <span ng-switch-when="enum-multiple">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <ui-select multiple
+                                       ng-model="store[key.name]"
+                                       ng-required="key.required"
+                                       theme="bootstrap"
+                                       ng-disabled="key.forbid?key.forbid(key,store):''"
+                                       ng-init="selectSearch[key.name] = key.name">
+                                <ui-select-match placeholder="{{key.hint?key.hint:'请选择'}}">{{key.noKey?$item:$item.name}}</ui-select-match>
+                                <ui-select-choices repeat="(key.noKey?subitem:subitem.id) as subitem in key.enum | filter: $select.search">
+                                    <div ng-bind-html="(key.noKey?subitem:subitem.name) | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </span>
+                    <span ng-switch-when="select">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                             <ui-select ng-model="store[key.name]"
+                                       theme="bootstrap"
+                                       ng-disabled="key.forbid?key.forbid(key,store):''"
+                                       ng-required="key.required"
+                                       ng-init="selectSearch[key.name] = key.name">
+                                <ui-select-match placeholder="{{key.hint?key.hint:'请选择'}}" allow-clear="{{key.clear===true?true:false}}">{{$select.selected[key.select.value]|limitTo:17}}</ui-select-match>
+                                <ui-select-choices repeat="subitem in store.$scope['$_'+key.name] | filter: $select.search">
+                                    <small ng-bind-html="subitem[key.select.value] | highlight: $select.search"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </span>
+                    <span ng-switch-when="multiple">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <ui-select multiple
+                                       ng-model="store[key.name]"
+                                       ng-required="key.required"
+                                       theme="bootstrap"
+                                       ng-disabled="key.forbid?key.forbid(key,store):''"
+                                       ng-init="selectSearch[key.name] = key.name">
+                                <ui-select-match placeholder="{{key.hint?key.hint:'请选择'}}">{{$item[key.select.value]}}</ui-select-match>
+                                <ui-select-choices repeat="subitem in store.$scope['$_'+key.name] | filter: $select.search">
+                                    <div ng-bind-html="subitem[key.select.value] | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </span>
+                    <span ng-switch-when="multiple_refresh">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <ui-select multiple
+                                       ng-model="store[key.name]"
+                                       theme="bootstrap"
+                                       ng-required="key.required"
+                                       ng-disabled="key.forbid?key.forbid(key,store):''"
+                                       ng-init="selectSearch[key.name] = key.name">
+                                <ui-select-match placeholder="{{key.hint?key.hint:'请选择'}}">{{$item[key.select.value]}}</ui-select-match>
+                                <ui-select-choices
+                                    repeat="subitem in store.$scope['$_'+key.name] | filter: $select.search"
+                                    ng-scroll='scrollData.get($event,key.name)'
+                                    refresh="scrollData.get(null,key.name,$select.search)"
+                                    refresh-delay="0">
+                                    <div ng-bind-html="subitem[key.select.value] | highlight: $select.search"></div>
+                                    <div class="ng-hide" ng-show="scrollData[key.name]"
+                                         ng-if="$last">loading...</div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </span>
+                    <span ng-switch-when="date">
+                        <label data-ng-bind="key.text" class="col-md-{{width}}"></label>
+                        <div class="col-md-{{_width}}">
+                            <div class="input-group ui-datepicker" key="key" data-ng-model="store[key.name]" gstime>
+                            </div>
+                        </div>
+                    </span>
+                    <span ng-switch-when="richtext">
+                        <label data-ng-bind="key.text" class="col-md-12"></label>
+                        <div class="col-md-12">
+                            <wysiwyg-edit content="store[key.name]"></wysiwyg-edit>
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-footer">
+            <button type="submit" class="btn btn-success btn-w-md" ng-class="{'btn-loading':Loading}" data-ng-disabled="form_constraints.$valid==false || form_constraints.$pristine==true||Loading">保存</button>
+            <a class="btn btn-primary btn-w-md"  ng-click="revert()" ng-if="store.$pk">复位</a>
+            <a class="btn btn-warning btn-w-md" ng-click="cancel()">关闭</a>
+        </div>
+    </section>
+</form>

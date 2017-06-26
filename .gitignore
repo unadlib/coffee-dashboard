@@ -1,3 +1,14 @@
+.idea
+/client/bower_components
+node_modules
+dist
+.tmp
+.sass-cache
+server/node_modules
+.DS_Store
+syntax: glob
+*.orig
+*.hgcheck
 # Logs
 logs
 *.log

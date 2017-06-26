@@ -1,0 +1,30 @@
+
+    <input type="text"
+           class="form-control"
+           uib-datepicker-popup="{{config.format}}"
+           ng-model="ngModel"
+           is-open="config.isopen"
+           placeholder="{{key.hint}}"
+           ng-change="change()"
+           ng-required="key.required"
+           ng-click="config.isopen=!0"
+           min-date="min"
+           max-date="max"
+           close-text="Close">
+    <div  uib-dropdown is-open="timeIsOpen" style="top:34px;">
+        <ul class="dropdown-menu dropdown-time ng-hide" ng-show="isTimeType" ui-not-close-on-click ng-click="$event.stopPropagation()">
+            <li>
+                <div ng-model="ngModel" style="display:inline-block;">
+                    <uib-timepicker class="ui-timepicker" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                </div>
+            </li>
+            <li>
+            <span class="btn-group pull-left">
+                <button type="button" class="btn btn-sm btn-info" ng-click="selectTime()">Now</button>
+            </span>
+                <button type="button" class="btn btn-sm btn-success pull-right" ng-click="closeTime()">Close</button>
+            </li>
+        </ul>
+    </div>
+    <span class="input-group-addon" ng-click="config.open($event)"><i class="fa fa-calendar"></i></span>
+

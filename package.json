@@ -1,0 +1,58 @@
+{
+  "name": "coffee-dashboard",
+  "version": "1.0.0",
+  "description": "Integrated dashboard is based on CoffeeScript/Angular 1.X/RestMod/Require/Lodash, etc.",
+  "main": "Gruntfile.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unadlib/coffee-dashboard.git"
+  },
+  "keywords": [
+    "CoffeeScript",
+    "Angular1.X",
+    "RestMod",
+    "Require",
+    "Lodash"
+  ],
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "express": "~3.4.7",
+    "grunt-typescript": "^0.7.0"
+  },
+  "devDependencies": {
+    "connect-livereload": "~0.4.0",
+    "grunt": "~0.4.4",
+    "grunt-concurrent": "~0.5.0",
+    "grunt-connect-proxy": "^0.2.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-coffee": "~0.10.1",
+    "grunt-contrib-compass": "~0.8.0",
+    "grunt-contrib-compress": "^0.14.0",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-connect": "~0.7.1",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.9.0",
+    "grunt-contrib-htmlmin": "~0.2.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-less": "~0.11.0",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-open": "~0.2.3",
+    "grunt-ssh-deploy": "^0.4.0",
+    "grunt-svgmin": "~0.4.0",
+    "grunt-typescript-compile": "^0.2.0",
+    "grunt-usemin": "~2.1.1",
+    "load-grunt-tasks": "~0.4.0",
+    "time-grunt": "~0.3.1",
+    "typescript": "~1.5.3"
+  },
+  "author": "unadlib",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unadlib/coffee-dashboard/issues"
+  },
+  "homepage": "https://github.com/unadlib/coffee-dashboard#readme"
+}

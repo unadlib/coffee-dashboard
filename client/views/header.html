@@ -1,0 +1,198 @@
+<header class="top-header clearfix">
+
+    <!-- Logo -->
+    <div class="logo">
+        <a href="#/">
+            <!-- <span class="logo-icon glyphicon glyphicon-fire"></span> -->
+            <span>{{main.brand}}</span>
+        </a>
+    </div>
+
+    <!-- needs to be put after logo to make it working-->
+    <div class="menu-button" toggle-off-canvas>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </div>
+
+    <div class="top-nav">
+        <ul class="nav-left list-unstyled">
+            <li>
+                <a href="#/"
+                   data-toggle-nav-collapsed-min
+                   class="toggle-min"
+                   id="step3"
+                   ><i class="fa fa-bars"></i></a>
+            </li>
+            <li class="hidden-xs" uib-dropdown>
+                <a href="javascript:;" id="step1" uib-dropdown-toggle><i class="fa fa-cogs"></i></a>
+                <div class="dropdown-menu with-arrow panel panel-dark admin-options" ui-not-close-on-click aria-labelledby="step1">
+                    <div class="panel-heading" data-i18n="settings"></div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p data-i18n="layouts style"></p>
+                            <label class="ui-radio"><input name="layout" type="radio" value="boxed" ng-model="admin.layout"><span data-i18n="boxed layout"></span></label>
+                            <label class="ui-radio"><input name="layout" type="radio" value="wide" ng-model="admin.layout"><span data-i18n="fullscreen layout"></span></label>
+                        </li>
+                        <li class="list-group-item">
+                            <p data-i18n="menu style"></p>
+                            <label class="ui-radio"><input name="menu" type="radio" value="vertical" ng-model="admin.menu"><span data-i18n="vertical menu"></span></label>
+                            <label class="ui-radio"><input name="menu" type="radio" value="horizontal" ng-model="admin.menu"><span data-i18n="horizontal menu"></span></label>
+                        </li>
+                        <li class="list-group-item">
+                            <p data-i18n="additional"></p>
+                            <label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ng-model="admin.fixedHeader"><span data-i18n="fixed top header"></span></label>
+                            <br>
+                            <label class="ui-checkbox"><input name="checkbox1" type="checkbox" value="option1" ng-model="admin.fixedSidebar"><span data-i18n="fixed sidebar menu"></span></label>
+                        </li>
+                        <li class="list-group-item">
+                            <p>
+                                <span data-i18n="page transition"></span>
+                                <span class="space"></span>
+                                <select ng-model="admin.pageTransition"
+                                        ng-options="ageTransitionOpt.name for ageTransitionOpt in pageTransitionOpts"></select>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <!--<li class="search-box visible-md visible-lg" uib-dropdown data-ng-class="{open:(route|filter:{text:keyword,show:true}).length>0 && keyword.length>0}">-->
+                <!--<div class="input-group">-->
+                    <!--<span class="input-group-addon" uib-dropdown-toggle id="nav_search"><i class="fa fa-search text-muted"></i></span>-->
+                    <!--<input type="text" class="form-control" data-ng-model="keyword" data-i18n="i18n-placeholder" placeholder="Search..." ng-trim="true">-->
+                <!--</div>-->
+                <!--<div class="dropdown-menu with-arrow panel panel-dark" aria-labelledby="nav_search">-->
+                    <!--<div class="panel-heading">-->
+                        <!--有 {{(route|filter:{text:keyword,show:true}).length}} 搜索结果-->
+                    <!--</div>-->
+                    <!--<ul class="list-group">-->
+                        <!--<li class="list-group-item" data-ng-repeat="item in route|filter:{text:keyword,show:true}" data-ng-if="keyword.length>0">-->
+                            <!--<a href="#{{item.url}}" class="media">-->
+                                <!--<span class="pull-left media-icon">-->
+                                    <!--<i class="fa fa-eye"></i>-->
+                                <!--</span>-->
+                                <!--<div class="media-body">-->
+                                    <!--<span class="block" data-ng-bind="item.text"></span>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!--<li ui-dropdown>-->
+                <!--<a href="javascript:;" uib-dropdown-toggle id="step5">-->
+                    <!--<i class="fa fa-bell-o"></i>-->
+                    <!--<span class="badge badge-info">3</span>-->
+                <!--</a>-->
+                <!--<div class="dropdown-menu with-arrow panel panel-dark" aria-labelledby="step5">-->
+                    <!--<div class="panel-heading">-->
+                        <!--You have 3 notifications.-->
+                    <!--</div>-->
+                    <!--<ul class="list-group">-->
+                        <!--<li class="list-group-item">-->
+                            <!--<a href="javascript:;" class="media">-->
+                                <!--<span class="pull-left media-icon">-->
+                                    <!--<span class="btn-icon-lined btn-icon-round btn-success"><i class="fa fa-bell-o"></i></span>-->
+                                <!--</span>-->
+                                <!--<div class="media-body">-->
+                                    <!--<span class="block">New tasks needs to be done</span>-->
+                                    <!--<span class="text-muted block">2min ago</span>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="list-group-item">-->
+                            <!--<a href="javascript:;" class="media">-->
+                                <!--<span class="pull-left media-icon">-->
+                                    <!--<span class="btn-icon-lined btn-icon-round btn-info"><i class="fa fa-bell-o"></i></span>-->
+                                <!--</span>-->
+                                <!--<div class="media-body">-->
+                                    <!--<span class="block">Change your password</span>-->
+                                    <!--<span class="text-muted">3 hours ago</span>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="list-group-item">-->
+                            <!--<a href="javascript:;" class="media">-->
+                                <!--<span class="pull-left media-icon">-->
+                                    <!--<span class="btn-icon-lined btn-icon-round btn-danger"><i class="fa fa-bell-o"></i></span>-->
+                                <!--</span>-->
+                                <!--<div class="media-body">-->
+                                    <!--<span class="block">New feature added</span>-->
+                                    <!--<span class="text-muted">9 hours ago</span>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                    <!--<div class="panel-footer">-->
+                        <!--<a href="#/mail/inbox">Show all notifications.</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</li>-->
+        </ul>
+
+        <ul class="nav-right pull-right list-unstyled" >
+            <li class="text-normal nav-profile" uib-dropdown>
+                <a href="javascript:;" id="userprofile" uib-dropdown-toggle>
+                    <img ng-src="{{main.data.photo || 'images/g1.jpg'}}" alt="" class="img-circle img30_30">
+                    <span class="hidden-xs">
+                        <span>{{main.data.realname}}</span>
+                    </span>
+                </a>
+                <ul class="dropdown-menu with-arrow pull-right" aria-labelledby="userprofile">
+                    <!--<li>-->
+                        <!--<a href="#{{getRouter('profile').url}}">-->
+                            <!--<i class="fa fa-user"></i>-->
+                            <!--<span data-i18n="My Profile"></span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <li>
+                        <a href="javascript:void(0)" ng-click="changePassword()">
+                            <i class="fa fa-edit"></i>
+                            <span data-i18n="Change Password"></span>
+                        </a>
+                    </li>
+                    <!--<li>-->
+                        <!--<a href="javascript:void(0)" ng-click="lock()">-->
+                            <!--<i class="fa fa-lock"></i>-->
+                            <!--<span data-i18n="Lock"></span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <li>
+                        <a href="javascript:void(0)" ng-click="logout()">
+                            <i class="fa fa-sign-out"></i>
+                            <span data-i18n="Log Out"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!--<li class="langs text-normal" uib-dropdown>
+                <a href="javascript:;" class="active-flag" id="step2" uib-dropdown-toggle>
+                    <div class="flag {{ getFlag() }}"></div>
+                </a>
+                <ul class="dropdown-menu with-arrow  pull-right list-langs" role="menu" aria-labelledby="step2">
+                    <li data-ng-show="lang !== 'English' ">
+                        <a href="javascript:;" data-ng-click="setLang('English')"><div class="flag flags-american"></div> English</a></li>
+                    <li data-ng-show="lang !== 'Español' ">
+                        <a href="javascript:;" data-ng-click="setLang('Español')"><div class="flag flags-spain"></div> Español</a></li>
+                    <li data-ng-show="lang !== '日本語' ">
+                        <a href="javascript:;" data-ng-click="setLang('日本語')"><div class="flag flags-japan"></div> 日本語</a></li>
+                    <li data-ng-show="lang !== '中文' ">
+                        <a href="javascript:;" data-ng-click="setLang('中文')"><div class="flag flags-china"></div> 中文</a></li>
+                    <li data-ng-show="lang !== 'Deutsch' ">
+                        <a href="javascript:;" data-ng-click="setLang('Deutsch')"><div class="flag flags-germany"></div> Deutsch</a></li>
+                    <li data-ng-show="lang !== 'français' ">
+                        <a href="javascript:;" data-ng-click="setLang('français')"><div class="flag flags-france"></div> français</a></li>
+                    <li data-ng-show="lang !== 'Italiano' ">
+                        <a href="javascript:;" data-ng-click="setLang('Italiano')"><div class="flag flags-italy"></div> Italiano</a></li>
+                    <li data-ng-show="lang !== 'Portugal' ">
+                        <a href="javascript:;" data-ng-click="setLang('Portugal')"><div class="flag flags-portugal"></div> Portugal</a></li>
+                    <li data-ng-show="lang !== 'Русский язык' ">
+                        <a href="javascript:;" data-ng-click="setLang('Русский язык')"><div class="flag flags-russia"></div> Русский язык</a></li>
+                    <li data-ng-show="lang !== '한국어' ">
+                        <a href="javascript:;" data-ng-click="setLang('한국어')"><div class="flag flags-korea"></div> 한국어</a></li>
+                </ul>-->
+            </li>
+        </ul>
+    </div>
+
+</header>

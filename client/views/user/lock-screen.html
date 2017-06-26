@@ -1,0 +1,23 @@
+<div class="page page-lock">
+
+    <div class="lock-centered clearfix">
+        <div class="lock-container">
+            <!-- <div ui-time class="lock-time"></div> -->
+
+            <section class="lock-box" >
+                <div class="lock-user">{{main.data.email}}</div>
+                <div class="lock-img"><img ng-src="{{main.data.photo}}" alt=""></div>
+                <div class="lock-pwd">
+                    <form ng-submit="unlock()">
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control" ng-model="password" data-i18n="i18n-placeholder">
+                            <a type="submit" class="btn-submit">
+                                <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

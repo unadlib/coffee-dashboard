@@ -1,0 +1,270 @@
+<div class="table-filters table-search" ng-if="tableConfigure.serverSearch.val == true">
+    <form class="form-inline" role="form" ng-submit="search()">
+        <span data-ng-repeat="item in $search_field" ng-switch="item.type">
+            <div class="form-group" ng-switch-when="string">
+                <label for="{{item.name}}">{{item.text}}</label>
+                <input type="text"
+                       class="form-control"
+                       data-ng-model="query[item.name]"
+                       id="{{item.name}}"
+                       placeholder="{{item.searchTitle}}"
+                       ng-init="query[item.name] = item.search">
+            </div>
+            <div class="form-group" ng-switch-when="boolean">
+                <label for="{{item.name}}" style="position: relative;top: -7px;">{{item.text}}</label>
+                <label class="switch switch-success" style="position: relative;top: 3px;">
+                    <input type="checkbox"
+                           ng-model="query[item.name]"
+                           ng-init="query[item.name]=(item.serverVal!==undefined?item.serverVal:'')"
+                           ng-checked="!(store[item.name]===(item.real!==undefined?item.real:true))?(item.unreal!==undefined?item.unreal:false):(item.real!==undefined?item.real:true)"
+                           ng-true-value="{{item.real!==undefined?item.real:true}}"
+                           ng-false-value="{{item.unreal!==undefined?item.unreal:false}}">
+                    <i></i>
+                </label>
+            </div>
+            <div class="form-group" ng-switch-when="select">
+                <ui-select ng-model="query[selectSearch[item.name]]"
+                           theme="bootstrap"
+                           ng-disabled="disabled"
+                           ng-init="selectSearch[item.name] =item.name">
+                    <ui-select-match placeholder="{{item.text}}" allow-clear="true">{{$select.selected[item.select.value]}}</ui-select-match>
+                    <ui-select-choices repeat="subitem[item.select.key] as subitem in currentPageStores['$_'+item.name] | filter: $select.search">
+                        <small ng-bind-html="subitem[item.select.value] | highlight: $select.search"></small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group vertical-align-top" ng-switch-when="multiple">
+                <ui-select multiple
+                           ng-model="query[selectSearch[item.name]+'[]']"
+                           theme="bootstrap" ng-disabled="disabled"
+                           style="width: 200px;"
+                           ng-init="selectSearch[item.name] = item.name">
+                    <ui-select-match placeholder="{{item.text}}">{{$item[item.select.value]}}</ui-select-match>
+                    <ui-select-choices repeat="subitem[item.select.key] as subitem in currentPageStores['$_'+item.name] | filter: $select.search">
+                        <div ng-bind-html="subitem[item.select.value] | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <span ng-switch-when="daterange">
+                <span rangeDate="time"  data-ng-model="query" startTime="start_time" endTime="end_time" format="yyyy-MM-dd HH:mm:ss" default-val="item.default"></span>
+            </span>
+
+        </span>
+        <span>
+            <button type="submit" class="btn btn-info search-btn"><span class="fa fa-search"></span> 搜索</button>
+        </span>
+    </form>
+</div>
+
+<div class="table-filters table-menu">
+    <div class="row">
+        <div class="col-sm-6 col-xs-6">
+            <div class="pull-left" uib-dropdown>
+                <a class="btn btn-default" href="javascript:;" uib-dropdown-toggle id="list-field-btn"><span class="fa fa-eye"></span></a>
+                <ul class="dropdown-menu list-inline" ui-not-close-on-click aria-labelledby="list-field-btn">
+                    <li data-ng-repeat="item in currentPageStores.$field" data-ng-if="item.name && item.name!='edit'" ng-hide="item.hide">
+                        <label class="ui-checkbox">
+                            <input ng-model="item.show" type="checkbox" >
+                            <span ng-bind="item.text"></span>
+                        </label>
+                    </li>
+                </ul>
+                <button type="button"
+                        class="btn btn-warning btn-trash ng-hide"
+                        ng-show="showTrash"
+                        ng-drop="true"
+                        ng-drop-success="onDropComplete(-1,$data)"><span class="fa fa-trash" ng-drag="true"></span></button>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-6">
+            <div class="pull-right" uib-dropdown>
+                <button type="button" class="btn btn-success" data-ng-if="tableConfigure.allowAdd.val==true" data-ng-model="currentPageStores" edittable="{{edittype}}" rootscope="datatable"><span class="fa fa-plus-circle"></span> 新增</button>
+                <a class="btn btn-default" href="javascript:;" uib-dropdown-toggle id="list-field-btn"><span class="fa fa-cog"></span></a>
+                <ul class="dropdown-menu list-inline" ui-not-close-on-click aria-labelledby="list-field-btn">
+                    <li data-ng-repeat="item in tableConfigure" ng-if="item.shown">
+                        <label class="ui-checkbox">
+                            <input ng-model="item.val" type="checkbox" >
+                            <span ng-bind="item.name"></span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="table-responsive">
+<table class="table table-bordered table-striped table-responsive"
+       ng-class="{'table-hover':tableConfigure.tdFocus.val==true,'table-edit':tableConfigure.tdEdit.val==true}">
+    <thead>
+    <tr>
+        <th class="th-checkbox" ng-if="tableConfigure.checkbox.val == true">
+            <label class="ui-checkbox"><input ng-model="$allChecked" ng-change="$allChange()" type="checkbox"><span></span></label>
+        </th>
+        <th data-ng-repeat="key in currentPageStores.$field track by $index"
+            ng-if="key.show"
+            style="{{key.style}}"
+            ng-drop="tableConfigure.columnDrop.val"
+            ng-drop-success="onDropComplete($index, $data)"
+            ng-drag-start="showtrash(true)"
+            ng-drag-stop="showtrash(false)"
+            >
+            <div class="th" ng-drag="true" ng-drag-data="key">
+                <span class="{{sortLocal.row == key.name?sortLocal.class:''}}"
+                      ng-click="key.name!='$edit' && key.sort && orderLocal(key.name)">{{key.text}}</span>
+                    <div class="th-list" uib-dropdown data-ng-if="key.name!='$edit'">
+                        <a href="javascript:;" uib-dropdown-toggle id="th-menu{{$index}}">
+                            <i class="fa fa-bars"
+                               ng-if="key.serverSort"
+                               data-ng-class="{'fa-sort-amount-asc': row == key.name,'fa-sort-amount-desc': row == '-'+key.name}"></i>
+                        </a>
+                        <ul class="dropdown-menu with-arrow" aria-labelledby="th-menu{{$index}}" ng-if="key.serverSort">
+                            <li><a href="javascript:;" data-ng-click=" order(key.name) "><i class="fa fa-sort-amount-asc"></i> 升序</a></li>
+                            <li><a href="javascript:;" data-ng-click=" order('-'+key.name) "><i class="fa fa-sort-amount-desc"></i> 降序</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:;" data-ng-click="key.show = false"><i class="fa fa-close"></i> 隐藏</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </th>
+    </tr>
+    <tr ng-if="tableConfigure.localSearch.val == true" class="tr-localSearch">
+        <th ng-if="tableConfigure.checkbox.val == true"></th>
+        <th data-ng-repeat="key in currentPageStores.$field" ng-if="key.show" ng-switch="key.type">
+            <input data-ng-model="datatableFilter[key.name]" name="{{key.name}}" class="form-control" ng-switch-when="string" />
+            <span ng-switch-when="select">
+                <ui-select ng-model="datatableFilter[key.name]['$pk']"
+                           theme="bootstrap"
+                           ng-disabled="disabled"
+                           ng-init="selectSearch[key.name]=key.name">
+                    <ui-select-match placeholder="请选择">{{$select.selected[key.select.value]}}</ui-select-match>
+                    <ui-select-choices
+                        repeat="subitem[key.select.key] as subitem in currentPageStores['$_'+key.name] | filter: $select.search">
+                        <small ng-bind-html="subitem[key.select.value] | highlight: $select.search"></small>
+                    </ui-select-choices>
+                </ui-select>
+            </span>
+            <span ng-switch-when="multiple">
+                <ui-select ng-model="datatableFilter[key.name]['$pk']"
+                           theme="bootstrap"
+                           ng-disabled="disabled"
+                           ng-init="selectSearch[key.name]=key.name">
+                    <ui-select-match placeholder="请选择">{{$select.selected[key.select.value]}}</ui-select-match>
+                    <ui-select-choices
+                        repeat="subitem[key.select.key] as subitem in currentPageStores['$_'+key.name] | filter: $select.search">
+                        <small ng-bind-html="subitem[key.select.value] | highlight: $select.search"></small>
+                    </ui-select-choices>
+                </ui-select>
+            </span>
+        </th>
+    </tr>
+    </thead>
+
+    <tbody ng-mouseleave="mouseLeave()">
+    <tr data-ng-repeat="store in currentPageStores|filter:datatableFilter track by $index"
+        ng-init="topindex=$index"
+        ng-class="{'tr-checked':store.$checked}"
+        class="animate-repeat">
+        <td ng-if="tableConfigure.checkbox.val == true">
+            <label class="ui-checkbox"><input ng-model="store.$checked" type="checkbox"><span></span></label>
+        </td>
+        <td data-ng-repeat="key in store.$field track by $index"
+            ng-if="key.show"
+            class="{{sortLocal.row == key.name?sortLocal.tdclass:''}}"
+            ng-click="tableConfigure.tdEdit.val && key.lineEdit && getTDclick(topindex,key.name,$event,key.type)"
+            ng-dblclick="tableConfigure.tdEdit.val && key.lineEdit && keyboardAction['13'](key.type)"
+            ng-mouseenter="mouseEnter(key.type)"
+            ng-switch="key.type"><!--ng-class="{'td-over':$index == tdIndex,'td-focus':store['$focus']==key.name}"-->
+            <img ng-switch-when="image" ng-src="{{store[key.name]}}"/>
+            <span ng-switch-when="icon" class="fa {{store[key.name]}}"></span>
+            <span ng-switch-when="select" ng-bind-html="key.render?key.render(store[key.name],store):store[key.name][key.select.value]"></span>
+            <span ng-switch-when="multiple" ng-repeat="unit in store[key.name] track by $index">
+                [{{unit[key.select.value]}}]
+            </span>
+            <span ng-switch-when="multiple_refresh" ng-repeat="mo in store[key.name]">
+                [{{mo[key.select.value]}}]
+            </span>
+            <!--<span ng-switch-when="boolean">-->
+                <!--<label class="switch switch-success td-boolean">-->
+                    <!--<input type="checkbox"-->
+                           <!--ng-model="store[key.name]"-->
+                           <!--ng-change="store.$save([key.name])"-->
+                           <!--ng-checked="store[key.name]==0?false:true"-->
+                           <!--ng-true-value="trueVal"-->
+                           <!--ng-false-value="falseVal">-->
+                    <!--<i></i>-->
+                <!--</label>-->
+            <!--</span>-->
+            <span ng-switch-when="edit">
+                <button type="button" class="btn btn-success btn-xs" data-ng-if="datatable.plus.edit" data-ng-model="store" edittable="{{edittype}}" rootscope="datatable">编辑</button>
+                <button type="button" class="btn btn-success btn-xs" data-ng-if="datatable.plus.viewGallery" ng-click="datatable.viewDetail(store)" id="{{store._id}}">查看图集</button>
+                <button type="button" class="btn btn-danger btn-xs" data-ng-if="datatable.plus.delete" data-ng-model="store" deltable="confirm">删除</button>
+            </span>
+            <span ng-switch-default ng-bind-html="key.render?key.render(store[key.name],store,currentPageStores):store[key.name]">
+            </span>
+        </td>
+    </tr>
+    </tbody>
+    <tfoot ng-if="tableConfigure.statistics.val == true">
+        <tr class="success">
+            <td ng-if="tableConfigure.checkbox.val == true"></td>
+            <td data-ng-repeat="sub in currentPageStores.$field"
+                ng-if="sub.show"
+                ng-switch="sub.type">
+                <span ng-switch-default ng-bind-html="sub.extra_render?sub.extra_render(sub.$extra,currentPageStores.$field):sub.$extra.toFixed(2)"></span>
+                <span ng-switch-when="edit">
+                    统计
+                </span>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+</section>
+<footer class="table-footer" ng-if="tableConfigure.hidepage.val != true">
+    <div class="row">
+        <div class="col-md-6 page-num-info">
+            <div class="btn-group">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-class="{'btn-primary':numPerPage == num}"
+                        ng-click="onNumPerPageChange(num)"
+                        data-ng-repeat="num in numPerPageOpt">{{num}}</button>
+            </div>
+            <span class="btn btn-default"
+                  style="background-color: transparent;border-color: transparent;"> 当前( {{(currentPage-1)*numPerPage+1}}项 - {{numPerPage*currentPage>currentPageStores.$totalCount?currentPageStores.$totalCount:numPerPage*currentPage}}项 ) 第{{currentPage}}页 / 共{{numPages}}页( {{currentPageStores.$totalCount}}项 ) </span>
+        </div>
+        <div class="col-md-6 text-right pagination-container form-inline">
+            <uib-pagination class="pagination-sm"
+                            ng-model="currentPage"
+                            total-items="currentPageStores.$totalCount"
+                            max-size="5"
+                            ng-change="goTo(currentPage)"
+                            items-per-page="numPerPage"
+                            num-pages="numPages"
+                            rotate="false"
+                            previous-text="&lsaquo;"
+                            next-text="&rsaquo;"
+                            boundary-links="true"></uib-pagination>
+            <div class="input-group">
+                <input type="text" class="form-control input-round goToPage" ng-model="currentPage">
+                <input type="hidden" ng-click="currentPage=1" class="reset-page" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-round goToBtn" type="button" ng-click="goTo(currentPage)">Go</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+<input class="form-control td-line-edit ng-hide"
+       ng-model="tdEdit.val[tdFocus.name]"
+       ng-show="tdEdit.shown"
+       ng-focus="tdEdit.focus=true"
+       ng-blur="getTDBlur()"
+       ng-keydown="getKeydown($event)"
+       type="text"/>
+<input class="td-line-focus ng-hide"
+       ng-show="tdEdit.show"
+       ng-blur="getTDBlur()"
+       ng-keydown="getTDkeydown($event)"
+       type="text"/>
